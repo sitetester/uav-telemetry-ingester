@@ -1,3 +1,4 @@
+// guarantees a header file is only included one single time during compilation
 #pragma once
 
 #include <chrono>
