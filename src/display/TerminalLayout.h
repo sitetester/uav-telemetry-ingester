@@ -61,7 +61,7 @@ namespace TerminalControl {
     constexpr auto SHOW_CURSOR = "\033[?25h";
     constexpr auto ERASE_EOL = "\033[K";
     constexpr auto CLEAR_SCREEN = "\033[2J";
-} // namespace TerminalControl
+}
 
 struct RenderConfig {
     static constexpr int HEADER_LENGTH = 85;
