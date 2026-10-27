@@ -1,5 +1,8 @@
 # UAV Real-Time Telemetry Ingestion Engine 🛸
 
+[![Build & Test Status](https://github.com/sitetester/uav-telemetry-ingester/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/sitetester/uav-telemetry-ingester/actions)
+
+
 A high-performance, low-latency telemetry ingestion pipeline and simulation suite written in modern **C++17/C++20**. This project processes high-frequency sensor payloads from an unmanned aerial vehicle (UAV) over UDP, aggregates states across thread boundaries concurrently, and displays data on a zero-flicker terminal HUD.
 
 ![UAV Telemetry Ingestion Engine Dashboard](screenshots/uav_telemetry.gif)
@@ -7,8 +10,8 @@ A high-performance, low-latency telemetry ingestion pipeline and simulation suit
 ## 🏗️ System Architecture
 
 The project is cleanly split into two standalone binaries:
-1. **`simulator`**: Simulates live drone physics (altitude, 3-axis IMU orientation, coordinate drift, and battery decay logs) using deterministic random number generators. It pushes packed binary structs over UDP using a fixed-timestep timeline loop to completely eliminate OS clock phase drift.
-2. **`ingester`**: The core low-latency server. It runs an asynchronous network worker thread that reads raw UDP byte streams, deserializes them safely using non-aliasing `std::memcpy` bitwise copy layers, tracks sensor connection dropouts via hysteresis alerts, and pipes data thread-safely into an in-memory frame buffer.
+1. **`uav_simulator`**: Simulates live drone physics (altitude, 3-axis IMU orientation, coordinate drift, and battery decay logs) using deterministic random number generators. It pushes packed binary structs over UDP using a fixed-timestep timeline loop to completely eliminate OS clock phase drift.
+2. **`uav_telemetry_ingester`**: The core low-latency server. It runs an asynchronous network worker thread that reads raw UDP byte streams, deserializes them safely using non-aliasing `std::memcpy` bitwise copy layers, tracks sensor connection dropouts via hysteresis alerts, and pipes data thread-safely into an in-memory frame buffer.
 
 ## 🚀 Getting Started
 
