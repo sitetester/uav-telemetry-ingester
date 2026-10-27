@@ -10,19 +10,6 @@
 #include "./panels/Panel.h"
 #include "src/sensors/FlightController.h"
 
-// ---------------------------------------------------------------------------
-// TerminalRenderer
-//
-// Renders the full terminal dashboard by overwriting content in-place using
-// ANSI cursor positioning (no ncurses library dependency, no screen flicker).
-//
-// Each render cycle builds the entire frame into an ostringstream buffer,
-// then writes it to stdout in one shot — prevents partial-frame tears.
-//
-// Called from the render thread in IngestionEngine every ~500ms.
-// All inputs are plain state snapshots — no locks held during rendering.
-// ---------------------------------------------------------------------------
-
 // Group related telemetry states together
 struct TelemetryState {
     const FlightControllerState& fc;
@@ -54,6 +41,18 @@ struct Alert {
     std::string message;
 };
 
+// ---------------------------------------------------------------------------
+// TerminalRenderer
+//
+// Renders the full terminal dashboard by overwriting content in-place using
+// ANSI cursor positioning (no ncurses library dependency, no screen flicker).
+//
+// Each render cycle builds the entire frame into an ostringstream buffer,
+// then writes it to stdout in one shot — prevents partial-frame tears.
+//
+// Called from the render thread in IngestionEngine every ~500ms.
+// All inputs are plain state snapshots — no locks held during rendering.
+// ---------------------------------------------------------------------------
 class TerminalRenderer {
 public:
     TerminalRenderer();
