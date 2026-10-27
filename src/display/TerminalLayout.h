@@ -7,6 +7,7 @@ enum class AnsiStyle : uint8_t {
     Bold = 1,
     Dim = 2,
 };
+
 constexpr std::string_view toEscape(const AnsiStyle style) {
     switch (style) {
         case AnsiStyle::Bold:
@@ -17,21 +18,13 @@ constexpr std::string_view toEscape(const AnsiStyle style) {
             return "";
     }
 }
+
 // Auto-convert AnsiStyle when pushed into any std::ostream
-inline std::ostream& operator<<(std::ostream& os,
-    const AnsiStyle style) {
+inline std::ostream& operator<<(std::ostream& os, const AnsiStyle style) {
     return os << toEscape(style);
 }
 
-
-enum class AnsiColor : uint8_t {
-    Default = 39,
-    Red = 31,
-    Green = 32,
-    Yellow = 33,
-    Cyan = 36,
-    White = 97
-};
+enum class AnsiColor : uint8_t { Default = 39, Red = 31, Green = 32, Yellow = 33, Cyan = 36, White = 97 };
 constexpr std::string_view toEscape(const AnsiColor color) {
     switch (color) {
         case AnsiColor::Red:
@@ -49,17 +42,16 @@ constexpr std::string_view toEscape(const AnsiColor color) {
     }
 }
 // Auto-convert AnsiColor when pushed into any std::ostream
-inline std::ostream& operator<<(std::ostream& os,
-    const AnsiColor color) {
+inline std::ostream& operator<<(std::ostream& os, const AnsiColor color) {
     return os << toEscape(color);
 }
 
 namespace TerminalControl {
-    constexpr auto RESET        = "\033[0m";
-    constexpr auto CURSOR_HOME  = "\033[H";
-    constexpr auto HIDE_CURSOR  = "\033[?25l";
-    constexpr auto SHOW_CURSOR  = "\033[?25h";
-    constexpr auto ERASE_EOL    = "\033[K";
+    constexpr auto RESET = "\033[0m";
+    constexpr auto CURSOR_HOME = "\033[H";
+    constexpr auto HIDE_CURSOR = "\033[?25l";
+    constexpr auto SHOW_CURSOR = "\033[?25h";
+    constexpr auto ERASE_EOL = "\033[K";
     constexpr auto CLEAR_SCREEN = "\033[2J";
 } // namespace TerminalControl
 
@@ -72,12 +64,12 @@ inline void drawSectionTitle( //
     std::ostream& out,
     const std::string_view title) {
     out << "\n"
-        << AnsiStyle::Bold << AnsiColor::White << "  " << title << TerminalControl::RESET
-        << TerminalControl::ERASE_EOL << "\n";
+        << AnsiStyle::Bold << AnsiColor::White << "  " << title << TerminalControl::RESET << TerminalControl::ERASE_EOL
+        << "\n";
 }
 
 // Count visible characters in a UTF-8 string (skips continuation bytes).
-inline  int visibleLen(const std::string_view& s) {
+inline int visibleLen(const std::string_view& s) {
     int count = 0;
     for (const unsigned char c: s) {
         if ((c & 0xC0u) != 0x80u)
@@ -86,7 +78,7 @@ inline  int visibleLen(const std::string_view& s) {
     return count;
 }
 
-inline  std::string padTo( //
+inline std::string padTo( //
     const std::string_view& text,
     const int width) {
     const int len = visibleLen(text);
@@ -94,7 +86,6 @@ inline  std::string padTo( //
         return std::string(text);
     return std::string(text) + std::string(width - len, ' ');
 }
-
 
 inline void writeRow( //
     std::ostream& out,
