@@ -64,7 +64,7 @@ public:
     }
 
     /**
-     * @brief Main render call — takes an aggregated telemetry snapshot and network stats to draw
+     * Main render call — takes an aggregated telemetry snapshot and network stats to draw
      * the HUD.
      *
      * @param packets_received Total telemetry packets received since startup.
@@ -73,10 +73,15 @@ public:
      */
     void render(uint64_t packets_received, uint64_t packets_dropped, std::chrono::steady_clock::time_point start_time);
 
-    // Push a new alert (called from IngestionEngine when thresholds are crossed)
-    // @param level - Pointers take more space: On a 64-bit architecture (like your MacBook Pro), a reference is
-    // implemented as a 64-bit pointer (8 bytes) under the hood. Passing an 8-byte pointer to look up a 1-byte enum
-    // value adds unnecessary indirection overhead.
+    /**
+     * Pushes a new alert (called from IngestionEngine when thresholds are crossed).
+     *
+     * Note: AlertLevel is passed by value (1 byte) instead of reference. On 64-bit architectures,
+     * references use 8-byte pointers under the hood, which would add unnecessary indirection overhead here.
+     *
+     * @param level   The severity rating of the notification (Warning or Critical).
+     * @param message The text description details of the threshold event.
+     */
     void addAlert(AlertLevel level, const std::string& message);
 
 private:
