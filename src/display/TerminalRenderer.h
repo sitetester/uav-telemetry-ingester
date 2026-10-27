@@ -14,7 +14,7 @@
 // TerminalRenderer
 //
 // Renders the full terminal dashboard by overwriting content in-place using
-// ANSI cursor positioning (no ncurses dependency, no screen flicker).
+// ANSI cursor positioning (no ncurses library dependency, no screen flicker).
 //
 // Each render cycle builds the entire frame into an ostringstream buffer,
 // then writes it to stdout in one shot — prevents partial-frame tears.
