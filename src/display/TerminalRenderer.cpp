@@ -15,6 +15,10 @@ TerminalRenderer::TerminalRenderer() {
 /**
  * @brief Draws the terminal interface by processing the latest telemetry snapshot and data stream health.
  *
+ * @details Buffers all layout commands—including screen clearing and cursor resets—in memory
+ *          before writing everything to standard output. This eliminates intermediate blank
+ *          states and results in a smooth, flicker-free terminal interface.
+ *
  * @param packets_received Total telemetry packets received since startup.
  * @param packets_dropped  Total telemetry packets dropped due to corruption or network loss.
  * @param start_time       Timestamp from when the system booted or recording started.
