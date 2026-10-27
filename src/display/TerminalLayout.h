@@ -24,7 +24,15 @@ inline std::ostream& operator<<(std::ostream& os, const AnsiStyle style) {
     return os << toEscape(style);
 }
 
-enum class AnsiColor : uint8_t { Default = 39, Red = 31, Green = 32, Yellow = 33, Cyan = 36, White = 97 };
+enum class AnsiColor : uint8_t {
+    Default = 39,
+    Red = 31,
+    Green = 32,
+    Yellow = 33,
+    Cyan = 36,
+    White = 97,
+};
+
 constexpr std::string_view toEscape(const AnsiColor color) {
     switch (color) {
         case AnsiColor::Red:
