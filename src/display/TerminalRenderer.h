@@ -92,7 +92,6 @@ private:
     void drawFooter();
 
     // Formatting helpers
-
     static std::string uptimeStr(std::chrono::steady_clock::time_point start_time);
     static std::string nowTimeStr();
 
