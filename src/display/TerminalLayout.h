@@ -80,6 +80,7 @@ inline void drawSectionTitle( //
 inline int visibleLen(const std::string_view& s) {
     int count = 0;
     for (const unsigned char c: s) {
+        // Adding the `u` guarantees both sides of the != operator are unsigned
         if ((c & 0xC0u) != 0x80u)
             ++count;
     }
