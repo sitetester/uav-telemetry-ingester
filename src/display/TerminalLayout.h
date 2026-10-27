@@ -55,11 +55,17 @@ inline std::ostream& operator<<(std::ostream& os, const AnsiColor color) {
 }
 
 namespace TerminalControl {
+    // Resets all text attributes (colors, bold, dim) back to the terminal default state.
     constexpr auto RESET = "\033[0m";
+    // Teleports the terminal cursor to the absolute top-left corner (0,0) without clearing text.
     constexpr auto CURSOR_HOME = "\033[H";
+    // Makes the terminal cursor invisible to prevent flickering during redraws.
     constexpr auto HIDE_CURSOR = "\033[?25l";
+    // Restores the visibility of the blinking terminal cursor.
     constexpr auto SHOW_CURSOR = "\033[?25h";
+    // Erases all text from the current cursor position to the very end of the active line.
     constexpr auto ERASE_EOL = "\033[K";
+    // Wipes the entire visible terminal screen canvas clean.
     constexpr auto CLEAR_SCREEN = "\033[2J";
 }
 
