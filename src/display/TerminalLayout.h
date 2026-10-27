@@ -103,9 +103,7 @@ inline void writeRow( //
     const AnsiColor color = AnsiColor::Default,
     const AnsiStyle style = AnsiStyle::None) {
     static constexpr int KEY_WIDTH = 20;
-
     out << "    " << key;
-
     // Calculate the missing spaces and dump them straight into the stream buffer natively
     const int len = visibleLen(key);
     if (len < KEY_WIDTH) {
