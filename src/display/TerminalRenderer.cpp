@@ -5,16 +5,15 @@
 #include <ranges>
 #include <sstream>
 
-#include "./panels/Panel.h"
 #include "./TerminalLayout.h"
+#include "./panels/Panel.h"
 
 TerminalRenderer::TerminalRenderer() {
     alerts_.reserve(MAX_ALERTS);
 }
 
 /**
- * @brief Main render call — takes an aggregated telemetry snapshot and network stats to draw the
- * HUD.
+ * @brief Draws the terminal interface by processing the latest telemetry snapshot and data stream health.
  *
  * @param packets_received Total telemetry packets received since startup.
  * @param packets_dropped  Total telemetry packets dropped due to corruption or network loss.
@@ -43,8 +42,7 @@ void TerminalRenderer::render( //
     std::cout.flush();
 }
 
-void TerminalRenderer::addAlert(AlertLevel level,
-    const std::string& message) {
+void TerminalRenderer::addAlert(AlertLevel level, const std::string& message) {
     Alert a;
     a.time_str = nowTimeStr();
     a.level = level;
@@ -63,8 +61,7 @@ void TerminalRenderer::drawHeader(const uint64_t packets_received,
     const std::string sep(RenderConfig::HEADER_LENGTH, '=');
 
     out_ << AnsiStyle::Bold << AnsiColor::Cyan << "  " << sep << TerminalControl::ERASE_EOL << "\n";
-    out_ << "  🛸  UAV REAL-TIME TELEMETRY INGESTION ENGINE  |  STATUS: ACTIVE"
-         << TerminalControl::ERASE_EOL << "\n";
+    out_ << "  🛸  UAV REAL-TIME TELEMETRY INGESTION ENGINE  |  STATUS: ACTIVE" << TerminalControl::ERASE_EOL << "\n";
     out_ << "  " << sep << TerminalControl::RESET << TerminalControl::ERASE_EOL << "\n";
     out_ << "  System Time: " << nowTimeStr() << "  |  Uptime: " << uptimeStr(start_time)
          << "  |  Packets: " << packets_received;
@@ -82,8 +79,7 @@ void TerminalRenderer::drawAlerts() {
 
     // Read directly from live memory bounds without allocating deep vector copies
     if (alerts_.empty()) {
-        out_ << "    " << AnsiStyle::Dim << "No alerts" << TerminalControl::RESET
-             << TerminalControl::ERASE_EOL << "\n";
+        out_ << "    " << AnsiStyle::Dim << "No alerts" << TerminalControl::RESET << TerminalControl::ERASE_EOL << "\n";
         return;
     }
 
@@ -100,9 +96,8 @@ void TerminalRenderer::drawAlerts() {
             levelStr = "[WARNING] ";
         }
 
-        out_ << "    " << AnsiStyle::Dim << time_str << TerminalControl::RESET << "  " << color
-             << AnsiStyle::Bold << levelStr << TerminalControl::RESET << "  " << message
-             << TerminalControl::ERASE_EOL << "\n";
+        out_ << "    " << AnsiStyle::Dim << time_str << TerminalControl::RESET << "  " << color << AnsiStyle::Bold
+             << levelStr << TerminalControl::RESET << "  " << message << TerminalControl::ERASE_EOL << "\n";
     }
 }
 
@@ -110,11 +105,11 @@ void TerminalRenderer::drawFooter() {
     const std::string sep(RenderConfig::HEADER_LENGTH, '=');
 
     out_ << "\n"
-         << AnsiStyle::Bold << AnsiColor::Cyan << "  " << sep << TerminalControl::RESET
-         << TerminalControl::ERASE_EOL << "\n";
+         << AnsiStyle::Bold << AnsiColor::Cyan << "  " << sep << TerminalControl::RESET << TerminalControl::ERASE_EOL
+         << "\n";
 
-    out_ << "  " << AnsiStyle::Dim << "[Press Ctrl+C to stop]" << TerminalControl::RESET
-         << TerminalControl::ERASE_EOL << "\n";
+    out_ << "  " << AnsiStyle::Dim << "[Press Ctrl+C to stop]" << TerminalControl::RESET << TerminalControl::ERASE_EOL
+         << "\n";
 }
 
 std::string TerminalRenderer::uptimeStr(const std::chrono::steady_clock::time_point start_time) {
@@ -124,8 +119,7 @@ std::string TerminalRenderer::uptimeStr(const std::chrono::steady_clock::time_po
     const int m = static_cast<int>((elapsed % 3600) / 60);
     const int s = static_cast<int>(elapsed % 60);
     std::ostringstream ss;
-    ss << std::setfill('0') << std::setw(2) << h << ":" << std::setw(2) << m << ":" << std::setw(2)
-       << s;
+    ss << std::setfill('0') << std::setw(2) << h << ":" << std::setw(2) << m << ":" << std::setw(2) << s;
     return ss.str();
 }
 
@@ -139,6 +133,3 @@ std::string TerminalRenderer::nowTimeStr() {
     ss << std::put_time(&tm_buf, "%Y-%m-%d %H:%M:%S");
     return ss.str();
 }
-
-
-
