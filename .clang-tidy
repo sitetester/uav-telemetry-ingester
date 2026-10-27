@@ -1,0 +1,20 @@
+Checks: >
+  *,
+  -readability-identifier-naming,
+  -readability-magic-numbers,
+  -google-readability-todo,
+  -modernize-use-trailing-return-type,
+  -fuchsia-*,
+  -llvm-*,
+  -altera-*,
+  -abseil-*,
+  -readability-identifier-length,
+  -misc-include-cleaner,
+  -bugprone-easily-swappable-parameters
+
+# Disable spell-check — it flags stdlib identifiers like setw, ostringstream, etc.
+  -readability-identifier-typos
+
+CheckOptions:
+  - key: readability-braces-around-statements.ShortStatementLines
+    value: '2'
