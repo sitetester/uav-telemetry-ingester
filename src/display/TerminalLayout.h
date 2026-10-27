@@ -37,10 +37,10 @@ constexpr std::string_view toEscape(const AnsiColor color) {
     switch (color) {
         case AnsiColor::Red:
             return "\033[31m";
-        case AnsiColor::Yellow:
-            return "\033[33m";
         case AnsiColor::Green:
             return "\033[32m";
+        case AnsiColor::Yellow:
+            return "\033[33m";
         case AnsiColor::Cyan:
             return "\033[36m";
         case AnsiColor::White:
