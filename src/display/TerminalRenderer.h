@@ -31,8 +31,10 @@ struct TelemetryState {
     const BatteryState& batteryState;
 };
 
-enum class AlertLevel { Warning, Critical };
-
+enum class AlertLevel {
+    Warning,
+    Critical,
+};
 inline const char* toString(const AlertLevel level) {
     switch (level) {
         case AlertLevel::Warning:
@@ -42,7 +44,6 @@ inline const char* toString(const AlertLevel level) {
     }
     return "UNKNOWN";
 }
-
 inline std::ostream& operator<<(std::ostream& os, const AlertLevel level) {
     return os << toString(level);
 }
