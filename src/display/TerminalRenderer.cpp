@@ -131,7 +131,7 @@ std::string TerminalRenderer::nowTimeStr() {
     const std::time_t now = std::time(nullptr);
     std::tm tm_buf{};
 
-    ::localtime_r(&now, &tm_buf);
+    localtime_r(&now, &tm_buf);
 
     std::ostringstream ss;
     ss << std::put_time(&tm_buf, "%Y-%m-%d %H:%M:%S");
